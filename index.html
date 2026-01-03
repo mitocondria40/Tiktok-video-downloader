@@ -6,79 +6,179 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-HHW2NBZHPD');
     </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descargador TikTok - GitHub</title>
+    
+    <title>Descargar Videos de TikTok Sin Marca de Agua - Gratis MP4</title>
+    <meta name="description" content="La mejor herramienta para descargar videos de TikTok sin marca de agua gratis. Guarda TikToks en MP4 HD en tu móvil o PC en segundos.">
+    <meta name="keywords" content="descargar tiktok, tiktok sin marca de agua, bajar videos tiktok, tiktok downloader mp4, guardar tiktok gratis">
+    <meta name="robots" content="index, follow">
+    
     <style>
         body {
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: #121212;
-            color: white;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .main-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        /* HERO SECTION */
+        .hero {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
+            padding: 3rem 1rem;
+            width: 100%;
+            max-width: 600px;
         }
         .container {
             background-color: #1e1e1e;
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 15px;
             text-align: center;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            border: 1px solid #333;
         }
-        h1 { color: #00f2ea; text-shadow: 2px 2px #ff0050; }
+        h1 { color: #00f2ea; text-shadow: 0px 0px 10px rgba(0, 242, 234, 0.3); margin-bottom: 0.5rem; }
+        .subtitle { color: #aaa; margin-bottom: 2rem; font-size: 0.9rem; }
+        
         input {
-            width: 80%;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #333;
+            background: #2a2a2a;
+            color: white;
             margin-bottom: 15px;
+            font-size: 16px;
+            box-sizing: border-box; /* Importante para que no se salga */
         }
+        input:focus { outline: none; border-color: #ff0050; }
+        
         button {
-            padding: 10px 20px;
+            width: 100%;
+            padding: 15px;
             background-color: #ff0050;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 16px;
             transition: 0.3s;
         }
-        button:hover { background-color: #d60043; }
-        button:disabled { background-color: #555; cursor: not-allowed; }
+        button:hover { background-color: #d60043; transform: translateY(-2px); }
+        button:disabled { background-color: #555; transform: none; cursor: wait; }
         
         #resultado { margin-top: 20px; }
         
         .action-btn {
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 15px;
             background: #00f2ea;
-            color: black;
+            color: #121212;
             text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 25px;
+            border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
             border: none;
+            font-size: 14px;
         }
         .action-btn:hover { background: #00c4bd; }
+
+        /* SEO CONTENT SECTION */
+        .seo-content {
+            max-width: 800px;
+            padding: 2rem;
+            margin-top: 2rem;
+            background: #181818;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .seo-content h2 { color: #ff0050; font-size: 1.5rem; margin-top: 2rem; }
+        .seo-content p { color: #ccc; margin-bottom: 1rem; }
+        
+        /* FOOTER */
+        footer {
+            margin-top: auto;
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #666;
+            width: 100%;
+            background: #0f0f0f;
+        }
+        footer a { color: #888; text-decoration: none; margin: 0 10px; }
+        
+        /* AD SPACE PLACEHOLDER */
+        .ad-space {
+            width: 100%;
+            height: 100px;
+            background: #222;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #444;
+            border: 1px dashed #444;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>TikTok Downloader</h1>
-        <p>Pega el enlace del video:</p>
-        <input type="text" id="urlInput" placeholder="https://vm.tiktok.com/...">
-        <button id="searchBtn" onclick="buscarVideo()">Buscar Video</button>
-        <div id="resultado"></div>
+    <div class="main-wrapper">
+        <div class="hero">
+            <div class="container">
+                <h1>TikTok Downloader</h1>
+                <p class="subtitle">Descarga videos de TikTok sin marca de agua en HD</p>
+                
+                <input type="text" id="urlInput" placeholder="Pega el enlace aquí (ej: https://vm.tiktok.com/...)">
+                <button id="searchBtn" onclick="buscarVideo()">DESCARGAR AHORA</button>
+                
+                <div class="ad-space">Espacio Publicitario (Futuro AdSense)</div>
+
+                <div id="resultado"></div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>¿Cómo descargar videos de TikTok sin marca de agua?</h2>
+            <p>Nuestra herramienta te permite <strong>bajar videos de TikTok gratis</strong> y en alta calidad (MP4). Es la solución perfecta si quieres guardar tus TikToks favoritos para verlos offline o compartirlos en otras redes sociales sin el logo molesto.</p>
+            
+            <h3>Características principales:</h3>
+            <ul>
+                <li>🚀 <strong>Descargas rápidas:</strong> Obtén tu video en segundos.</li>
+                <li>🚫 <strong>Sin marca de agua:</strong> Elimina el logo de TikTok automáticamente.</li>
+                <li>📱 <strong>Compatible con todos los dispositivos:</strong> Funciona en Android, iPhone, PC y Mac.</li>
+                <li>💸 <strong>100% Gratis:</strong> Sin registros ni pagos ocultos.</li>
+            </ul>
+
+            <h2>Guía paso a paso</h2>
+            <p>1. Abre la aplicación de TikTok y busca el video que quieres guardar.</p>
+            <p>2. Pulsa en "Compartir" y selecciona "Copiar enlace".</p>
+            <p>3. Pega el enlace en nuestro descargador y pulsa el botón.</p>
+            <p>4. ¡Listo! El video se guardará en tu galería.</p>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 TikTok Downloader Tool. No estamos afiliados a TikTok/ByteDance.</p>
+            <br>
+            <a href="#">Política de Privacidad</a> | <a href="#">Términos de Uso</a> | <a href="#">Contacto</a>
+        </footer>
     </div>
 
     <script>
@@ -88,15 +188,14 @@
             const searchBtn = document.getElementById('searchBtn');
             
             if (!url) {
-                resultadoDiv.innerHTML = "<p style='color:red'>Por favor pega un enlace.</p>";
+                resultadoDiv.innerHTML = "<p style='color:#ff4d4d'>⚠️ Por favor pega un enlace válido.</p>";
                 return;
             }
 
-            resultadoDiv.innerHTML = "<p>Buscando video...</p>";
+            resultadoDiv.innerHTML = "<p>🔄 Procesando video...</p>";
             searchBtn.disabled = true;
 
             try {
-                // API pública
                 const apiUrl = `https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`;
                 const response = await fetch(apiUrl);
                 const data = await response.json();
@@ -106,20 +205,21 @@
                     const cover = data.data.cover;
                     const videoId = data.data.id;
 
-                    // Mostramos la imagen y el botón de descarga
                     resultadoDiv.innerHTML = `
-                        <img src="${cover}" style="width:100px; border-radius:10px; margin-bottom:10px;">
-                        <br>
-                        <button onclick="forzarDescarga('${videoUrl}', 'tiktok_${videoId}.mp4')" class="action-btn" id="dlBtn">
-                            Descargar Video
-                        </button>
+                        <div style="margin-top:20px; border-top:1px solid #333; padding-top:20px;">
+                            <img src="${cover}" style="width:120px; border-radius:10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                            <br>
+                            <button onclick="forzarDescarga('${videoUrl}', 'tiktok_sin_marca_${videoId}.mp4')" class="action-btn" id="dlBtn">
+                                ⬇️ DESCARGAR MP4
+                            </button>
+                        </div>
                     `;
                 } else {
-                    resultadoDiv.innerHTML = "<p style='color:red'>Video no encontrado o privado.</p>";
+                    resultadoDiv.innerHTML = "<p style='color:#ff4d4d'>❌ Video no encontrado o cuenta privada.</p>";
                 }
             } catch (error) {
                 console.error(error);
-                resultadoDiv.innerHTML = "<p style='color:red'>Error de conexión.</p>";
+                resultadoDiv.innerHTML = "<p style='color:#ff4d4d'>❌ Error de conexión con el servidor.</p>";
             } finally {
                 searchBtn.disabled = false;
             }
@@ -129,7 +229,7 @@
             const btn = document.getElementById('dlBtn');
             const originalText = btn.innerText;
             
-            btn.innerText = "Descargando... (Espere)";
+            btn.innerText = "⏳ Descargando...";
             btn.disabled = true;
             btn.style.backgroundColor = "#ccc";
 
@@ -150,16 +250,16 @@
                 window.URL.revokeObjectURL(blobUrl);
                 document.body.removeChild(a);
                 
-                btn.innerText = "¡Listo!";
+                btn.innerText = "✅ ¡Descarga completada!";
                 setTimeout(() => {
                     btn.innerText = originalText;
                     btn.disabled = false;
                     btn.style.backgroundColor = "#00f2ea";
-                }, 2000);
+                }, 3000);
 
             } catch (e) {
                 console.error(e);
-                alert("La descarga automática falló. Se abrirá en una nueva pestaña.");
+                alert("Tu navegador bloqueó la descarga automática. Se abrirá en una pestaña nueva para que lo guardes manualmente.");
                 window.open(url, '_blank');
                 btn.innerText = originalText;
                 btn.disabled = false;
