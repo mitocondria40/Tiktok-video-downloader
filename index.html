@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HHW2NBZHPD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-HHW2NBZHPD');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Descargador TikTok - GitHub</title>
@@ -98,7 +106,7 @@
                     const cover = data.data.cover;
                     const videoId = data.data.id;
 
-                    // Mostramos la imagen y el botón de descarga con la nueva función
+                    // Mostramos la imagen y el botón de descarga
                     resultadoDiv.innerHTML = `
                         <img src="${cover}" style="width:100px; border-radius:10px; margin-bottom:10px;">
                         <br>
@@ -126,24 +134,19 @@
             btn.style.backgroundColor = "#ccc";
 
             try {
-                // 1. Obtenemos el archivo como un "blob" (datos crudos)
                 const response = await fetch(url);
                 if (!response.ok) throw new Error("Error de red");
                 
                 const blob = await response.blob();
-                
-                // 2. Creamos un enlace invisible temporal en el navegador
                 const blobUrl = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.style.display = 'none';
                 a.href = blobUrl;
-                a.download = filename; // Esto fuerza el nombre del archivo
+                a.download = filename;
                 
-                // 3. Hacemos click automáticamente
                 document.body.appendChild(a);
                 a.click();
                 
-                // 4. Limpiamos
                 window.URL.revokeObjectURL(blobUrl);
                 document.body.removeChild(a);
                 
@@ -156,7 +159,7 @@
 
             } catch (e) {
                 console.error(e);
-                alert("La descarga automática falló por seguridad del navegador. Se abrirá en una nueva pestaña.");
+                alert("La descarga automática falló. Se abrirá en una nueva pestaña.");
                 window.open(url, '_blank');
                 btn.innerText = originalText;
                 btn.disabled = false;
