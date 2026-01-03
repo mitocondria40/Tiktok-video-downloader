@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargador TikTok - GitHub</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #121212;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        h1 { color: #00f2ea; text-shadow: 2px 2px #ff0050; }
+        input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #ff0050;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #d60043; }
+        button:disabled { background-color: #555; cursor: not-allowed; }
+        
+        #resultado { margin-top: 20px; }
+        
+        .action-btn {
+            display: inline-block;
+            margin-top: 10px;
+            background: #00f2ea;
+            color: black;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+        }
+        .action-btn:hover { background: #00c4bd; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>TikTok Downloader</h1>
+        <p>Pega el enlace del video:</p>
+        <input type="text" id="urlInput" placeholder="https://vm.tiktok.com/...">
+        <button id="searchBtn" onclick="buscarVideo()">Buscar Video</button>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        async function buscarVideo() {
+            const url = document.getElementById('urlInput').value;
+            const resultadoDiv = document.getElementById('resultado');
+            const searchBtn = document.getElementById('searchBtn');
+            
+            if (!url) {
+                resultadoDiv.innerHTML = "<p style='color:red'>Por favor pega un enlace.</p>";
+                return;
+            }
+
+            resultadoDiv.innerHTML = "<p>Buscando video...</p>";
+            searchBtn.disabled = true;
+
+            try {
+                // API pública
+                const apiUrl = `https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`;
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.code === 0) {
+                    const videoUrl = data.data.play;
+                    const cover = data.data.cover;
+                    const videoId = data.data.id;
+
+                    // Mostramos la imagen y el botón de descarga con la nueva función
+                    resultadoDiv.innerHTML = `
+                        <img src="${cover}" style="width:100px; border-radius:10px; margin-bottom:10px;">
+                        <br>
+                        <button onclick="forzarDescarga('${videoUrl}', 'tiktok_${videoId}.mp4')" class="action-btn" id="dlBtn">
+                            Descargar Video
+                        </button>
+                    `;
+                } else {
+                    resultadoDiv.innerHTML = "<p style='color:red'>Video no encontrado o privado.</p>";
+                }
+            } catch (error) {
+                console.error(error);
+                resultadoDiv.innerHTML = "<p style='color:red'>Error de conexión.</p>";
+            } finally {
+                searchBtn.disabled = false;
+            }
+        }
+
+        async function forzarDescarga(url, filename) {
+            const btn = document.getElementById('dlBtn');
+            const originalText = btn.innerText;
+            
+            btn.innerText = "Descargando... (Espere)";
+            btn.disabled = true;
+            btn.style.backgroundColor = "#ccc";
+
+            try {
+                // 1. Obtenemos el archivo como un "blob" (datos crudos)
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Error de red");
+                
+                const blob = await response.blob();
+                
+                // 2. Creamos un enlace invisible temporal en el navegador
+                const blobUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = blobUrl;
+                a.download = filename; // Esto fuerza el nombre del archivo
+                
+                // 3. Hacemos click automáticamente
+                document.body.appendChild(a);
+                a.click();
+                
+                // 4. Limpiamos
+                window.URL.revokeObjectURL(blobUrl);
+                document.body.removeChild(a);
+                
+                btn.innerText = "¡Listo!";
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                    btn.style.backgroundColor = "#00f2ea";
+                }, 2000);
+
+            } catch (e) {
+                console.error(e);
+                alert("La descarga automática falló por seguridad del navegador. Se abrirá en una nueva pestaña.");
+                window.open(url, '_blank');
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.style.backgroundColor = "#00f2ea";
+            }
+        }
+    </script>
+</body>
+</html>
