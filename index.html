@@ -14,7 +14,7 @@
     
     <title>Descargar Videos de TikTok Sin Marca de Agua - Gratis MP4</title>
     <meta name="description" content="La mejor herramienta para descargar videos de TikTok sin marca de agua gratis. Guarda TikToks en MP4 HD en tu móvil o PC en segundos.">
-    <meta name="keywords" content="descargar tiktok, tiktok sin marca de agua, descargar videos tiktok, tiktok downloader mp4, guardar tiktok gratis">
+    <meta name="keywords" content="descargar tiktok, tiktok sin marca de agua, bajar videos tiktok, tiktok downloader mp4, guardar tiktok gratis">
     <meta name="robots" content="index, follow">
     
     <style>
@@ -41,6 +41,7 @@
             padding: 3rem 1rem;
             width: 100%;
             max-width: 600px;
+            box-sizing: border-box;
         }
         .container {
             background-color: #1e1e1e;
@@ -50,6 +51,7 @@
             width: 100%;
             box-shadow: 0 4px 20px rgba(0,0,0,0.6);
             border: 1px solid #333;
+            box-sizing: border-box;
         }
         h1 { color: #00f2ea; text-shadow: 0px 0px 10px rgba(0, 242, 234, 0.3); margin-bottom: 0.5rem; }
         .subtitle { color: #aaa; margin-bottom: 2rem; font-size: 0.9rem; }
@@ -63,7 +65,7 @@
             color: white;
             margin-bottom: 15px;
             font-size: 16px;
-            box-sizing: border-box; /* Importante para que no se salga */
+            box-sizing: border-box;
         }
         input:focus { outline: none; border-color: #ff0050; }
         
@@ -96,6 +98,8 @@
             font-weight: bold;
             border: none;
             font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
         }
         .action-btn:hover { background: #00c4bd; }
 
@@ -157,7 +161,7 @@
 
         <div class="seo-content">
             <h2>¿Cómo descargar videos de TikTok sin marca de agua?</h2>
-            <p>Nuestra herramienta te permite <strong>descargar videos de TikTok gratis</strong> y en alta calidad (MP4). Es la solución perfecta si quieres guardar tus TikToks favoritos para verlos offline o compartirlos en otras redes sociales sin el logo molesto.</p>
+            <p>Nuestra herramienta te permite <strong>bajar videos de TikTok gratis</strong> y en alta calidad (MP4). Es la solución perfecta si quieres guardar tus TikToks favoritos para verlos offline o compartirlos en otras redes sociales sin el logo molesto.</p>
             
             <h3>Características principales:</h3>
             <ul>
@@ -205,13 +209,24 @@
                     const cover = data.data.cover;
                     const videoId = data.data.id;
 
+                    // Generamos el HTML con dos botones: uno visible (intento automático) y otro oculto (manual)
                     resultadoDiv.innerHTML = `
                         <div style="margin-top:20px; border-top:1px solid #333; padding-top:20px;">
                             <img src="${cover}" style="width:120px; border-radius:10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
                             <br>
-                            <button onclick="forzarDescarga('${videoUrl}', 'tiktok_sin_marca_${videoId}.mp4')" class="action-btn" id="dlBtn">
+                            
+                            <button onclick="intentarDescarga('${videoUrl}', 'tiktok_${videoId}.mp4', this)" class="action-btn" id="autoDlBtn">
                                 ⬇️ DESCARGAR MP4
                             </button>
+
+                            <a id="backupBtn" href="${videoUrl}" target="_blank" class="action-btn" style="display:none; background-color:#333; color:white; margin-top:10px;">
+                                🔗 ABRIR VIDEO (Descarga Manual)
+                            </a>
+                            
+                            <p id="instructionText" style="display:none; font-size:0.8rem; color:#aaa; margin-top:10px;">
+                                <strong>Nota:</strong> Tu navegador bloqueó la descarga automática.<br>
+                                Haz clic en "Abrir Video", luego clic derecho sobre el video > "Guardar video como...".
+                            </p>
                         </div>
                     `;
                 } else {
@@ -225,20 +240,23 @@
             }
         }
 
-        async function forzarDescarga(url, filename) {
-            const btn = document.getElementById('dlBtn');
+        async function intentarDescarga(url, filename, btn) {
             const originalText = btn.innerText;
+            const backupBtn = document.getElementById('backupBtn');
+            const instructionText = document.getElementById('instructionText');
             
-            btn.innerText = "⏳ Descargando...";
+            btn.innerText = "⏳ Intentando descarga...";
             btn.disabled = true;
-            btn.style.backgroundColor = "#ccc";
 
             try {
+                // 1. Intentamos descargar el archivo en memoria (Blob)
                 const response = await fetch(url);
-                if (!response.ok) throw new Error("Error de red");
+                if (!response.ok) throw new Error("Bloqueo de red");
                 
                 const blob = await response.blob();
                 const blobUrl = window.URL.createObjectURL(blob);
+                
+                // 2. Creamos el link temporal
                 const a = document.createElement('a');
                 a.style.display = 'none';
                 a.href = blobUrl;
@@ -247,26 +265,31 @@
                 document.body.appendChild(a);
                 a.click();
                 
+                // 3. Limpieza
                 window.URL.revokeObjectURL(blobUrl);
                 document.body.removeChild(a);
                 
-                btn.innerText = "✅ ¡Descarga completada!";
+                btn.innerText = "✅ ¡Descarga lista!";
                 setTimeout(() => {
                     btn.innerText = originalText;
                     btn.disabled = false;
-                    btn.style.backgroundColor = "#00f2ea";
                 }, 3000);
 
             } catch (e) {
-                console.error(e);
-                alert("Tu navegador bloqueó la descarga automática. Se abrirá en una pestaña nueva para que lo guardes manualmente.");
+                // FALLBACK: Si falla lo anterior, activamos el plan B
+                console.log("Descarga directa falló, activando modo manual.");
+                
+                // Ocultamos el botón que falló
+                btn.style.display = 'none';
+                
+                // Mostramos el botón de enlace directo y las instrucciones
+                backupBtn.style.display = 'inline-block';
+                instructionText.style.display = 'block';
+                
+                // Intentamos abrir la pestaña nueva automáticamente por si acaso el navegador lo permite
                 window.open(url, '_blank');
-                btn.innerText = originalText;
-                btn.disabled = false;
-                btn.style.backgroundColor = "#00f2ea";
             }
         }
     </script>
 </body>
 </html>
-
